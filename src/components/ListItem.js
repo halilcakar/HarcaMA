@@ -19,7 +19,7 @@ const ListItemComp = (props) => {
         </View>
         <View style={styles.subContainer}>
           <Text style={styles.subHeader}>Toplam:</Text>
-          <Text style={styles.text}>{props.item.toplam} TL</Text>
+          <Text style={styles.text}>{props.item.total} TL</Text>
         </View>
         <Button onPress={props.edit} style={styles.button}>
           <Icon name={`${config.platPref}settings`} size={25} color={'white'}/>

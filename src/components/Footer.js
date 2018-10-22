@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Footer, FooterTab, H3, H2, Left, Right } from "native-base";
-
-
-const platPref = Platform.OS === 'android' ? 'md-' : 'ios-';
 
 class FooterComp extends Component {
   render() {

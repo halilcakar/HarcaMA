@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Body, DatePicker, Left, Right, Header } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import config from '../config';
+
+import icon from '../assets/64x64-rev.png';
 
 class HeaderComp extends Component {
   render() {
     return (
       <Header style={{ backgroundColor: config.navBarBackgroundColor }} androidStatusBarColor={config.statusBarColor}>
         <Left style={[styles.container, styles.flex1]}>
-          <Icon name={`rocket`} size={30} color={'white'}/>
+          <TouchableOpacity onPress={this.props.onIconPress} style={styles.flex1}>
+            <Image source={icon} style={{ width: 36, height: 36 }} />
+          </TouchableOpacity>
         </Left>
         <Body style={[styles.container, styles.flex2]}>
           <DatePicker

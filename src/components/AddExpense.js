@@ -12,8 +12,7 @@ class AddExpense extends Component {
       aciklama: '',
       adet: '',
       fiyat: '',
-      odemeSekli: 'nakit',
-      toplam: 0
+      odemeSekli: 'nakit'
     };
   }
   onValueChange(value: string) {
@@ -22,32 +21,30 @@ class AddExpense extends Component {
     });
   }
   onFiyatChange(fiyat) {
+    if(fiyat === '') {
+      fiyat = '';
+    } else {
+      fiyat = fiyat.replace(new RegExp(',','gm'), '')
+        .replace(new RegExp('-','gm'), '');
+      fiyat = parseInt(fiyat).toString();
+    }
+    fiyat.toString();
     this.setState(prevState => {
-      let toplam = parseInt(prevState.adet) * parseInt(fiyat);
-      if (isNaN(toplam)) {
-        toplam = 0;
-      }
       return {
         ...prevState,
-        fiyat,
-        toplam
+        fiyat
       };
     });
   }
   onAdetChange(adet) {
+    adet =  (!/^\d+$/.test(adet) ? '' : adet).toString();
     this.setState(prevState => {
-      let toplam = parseInt(adet) * parseInt(prevState.fiyat);
-      if (isNaN(toplam)) {
-        toplam = 0;
-      }
       return {
         ...prevState,
-        adet,
-        toplam
+        adet
       };
     });
   }
-
   render() {
     return (
       <Container>
@@ -75,8 +72,8 @@ class AddExpense extends Component {
               <CardItem>
                 <Item inlineLabel>
                   <Label>Birim Fiyat:</Label>
-                  <Input onChangeText={this.onFiyatChange.bind(this)} value={this.state.fiyat}
-                         keyboardType={'numeric'}/>
+                  <Input onChangeText={this.onFiyatChange.bind(this)} value={this.state.fiyat} keyboardType={'numeric'}/>
+                  <Text style={styles.innerText}>TL</Text>
                 </Item>
               </CardItem>
               <CardItem>
@@ -96,7 +93,9 @@ class AddExpense extends Component {
               <CardItem>
                 <Item inlineLabel disabled>
                   <Label>Toplam :</Label>
-                  <Input disabled={true} value={`${this.state.toplam.toString()} TL`}/>
+                  <Input disabled={true} value={`${
+                    isNaN(parseInt(this.state.adet) * parseFloat(this.state.fiyat)) ? 0 : parseInt(this.state.adet) * parseFloat(this.state.fiyat)
+                  } TL`}/>
                 </Item>
               </CardItem>
               <Button
@@ -129,6 +128,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 15,
     marginTop: 10
+  },
+  innerText: {
+    paddingRight: 10
   }
 });
 

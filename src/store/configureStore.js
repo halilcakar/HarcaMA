@@ -2,6 +2,7 @@ import { createStore, combineReducers } from 'redux';
 
 import rootReducer from './reducers/rootReducer';
 
+
 const rootReducers = combineReducers({
   expense: rootReducer
 });

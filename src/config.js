@@ -1,4 +1,5 @@
-import { Platform } from "react-native";
+import { Platform, Dimensions } from 'react-native';
+
 
 export default {
   platPref: (Platform.OS === 'android') ? 'md-' : 'ios-',

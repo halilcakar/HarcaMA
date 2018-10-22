@@ -6,10 +6,10 @@ export const addExpense = (data) => {
     payload: data
   }
 };
-export const deleteExpense = (id) => {
+export const deleteExpense = (data) => {
   return {
     type: DELETE_EXPENSE,
-    payload: id
+    payload: data
   }
 };
 export const updateExpense = (data) => {
