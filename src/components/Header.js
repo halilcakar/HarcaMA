@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import { Body, DatePicker, Left, Right, Header, H3 } from 'native-base';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Body, DatePicker, Left, Right, Header } from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import config from '../config';
 
 class HeaderComp extends Component {
@@ -9,7 +9,7 @@ class HeaderComp extends Component {
     return (
       <Header style={{ backgroundColor: config.navBarBackgroundColor }} androidStatusBarColor={config.statusBarColor}>
         <Left style={[styles.container, styles.flex1]}>
-          <Icon name={`${config.platPref}wallet`} size={30} color={'white'}/>
+          <Icon name={`rocket`} size={30} color={'white'}/>
         </Left>
         <Body style={[styles.container, styles.flex2]}>
           <DatePicker
@@ -27,7 +27,7 @@ class HeaderComp extends Component {
         </Body>
         <Right style={[styles.container, styles.flex1]}>
           <TouchableOpacity onPress={this.props.onToggle} style={styles.flex1}>
-            <Icon name={`${config.platPref}add`} size={30} color={'white'}/>
+            <Icon name={`plus-circle`} size={30} color={'white'}/>
           </TouchableOpacity>
         </Right>
       </Header>

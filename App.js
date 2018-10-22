@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { FlatList, Alert, AsyncStorage } from 'react-native';
+import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
 
 import HeaderComp from './src/components/Header';
 import FooterComp from './src/components/Footer';
 import ListItemComp from './src/components/ListItem';
 import Spinner from './src/components/Spinner';
-
-import config from './src/config';
+import { addExpense, deleteExpense, updateExpense, changeDate } from './src/store/actions';
 
 class App extends Component {
 
@@ -17,7 +17,6 @@ class App extends Component {
     this.state = {
       isLoading: true,
       chosenDate: new Date(),
-      month: {},
       dailyExpense: [],
       todayExpense: 0,
       totalMonthExpense: 0,
@@ -89,7 +88,7 @@ class App extends Component {
 
       let totalMonthExpense = prevState.month[prefix]['totalMonthExpense'];
       let todayExpense = 0;
-      prevState.month[prefix]['days'][day].forEach(function (item) { todayExpense += (item.adet * item.fiyat); });
+      prevState.month[prefix]['days'][day].forEach(function (item) { todayExpense += item.toplam; });
       let dailyExpense = [].concat(prevState.month[prefix]['days'][day]);
       return {
         ...prevState,
@@ -102,7 +101,7 @@ class App extends Component {
   }
   addExpence(data) {
     this.setState(prevState => {
-      const {prefix, day} = this.getDateString(prevState.chosenDate);
+      const { prefix, day } = this.getDateString(prevState.chosenDate);
       this.checkPrefixDay(prevState, prefix, day);
       prevState.month[prefix]['days'][day].push({
         ...data,
@@ -266,4 +265,21 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = ({ expense }) =>{
+  const { isLoading, chosenDate, dailyExpense, todayExpense, totalMonthExpense } = state;
+  return {
+    isLoading,
+    chosenDate,
+    dailyExpense,
+    todayExpense,
+    totalMonthExpense,
+  };
+};
+
+const mapDisatchToProps = dispatch => {
+  return {
+    onAddExpense: data => dispatch(addExpense(data))
+  };
+};
+
+export default connect()(App);
