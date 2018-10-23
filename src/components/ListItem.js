@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 2,
-    borderColor: '#1DAA80',
+    borderColor: '#adb3b6',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.8,
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     elevation: 1,
     marginBottom: 5,
     padding: 10,
+    backgroundColor: 'white',
     width: '100%'
   },
   subContainer: {
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#77CCB3'
   },
   text: {
-    color: '#5D1400',
+    color: '#4f5558',
     fontSize: 18,
     marginRight: 10
   }

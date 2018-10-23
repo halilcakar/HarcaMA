@@ -50,7 +50,7 @@ class App extends Component {
       '',
       'Silmek istediğinize emin misiniz?',
       [
-        {text: 'Silme!', onPress: () => {}, style: 'cancel'},
+        {text: 'İptal', onPress: () => {}, style: 'cancel'},
         {text: 'Sil', onPress: () => this.props.onDeleteExpense(deleteItem) },
       ],
       {
@@ -94,7 +94,7 @@ class App extends Component {
           onToggle={this.onPressAddExpense}
           onIconPress={() => { this.props.navigator.toggleDrawer(); }}
         />
-        <Content padder>
+        <Content style={{ backgroundColor: '#f9f9f9' }} padder>
           <FlatList
             data={this.props.dailyExpense}
             renderItem={ ({ item }) => {
