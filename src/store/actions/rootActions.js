@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE } from './actionTypes';
+import { ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE, DELETE_ALL_EXPENSE } from './actionTypes';
 
 export const addExpense = (data) => {
   return {
@@ -22,5 +22,11 @@ export const changeDate = (date) => {
   return {
     type: CHANGE_DATE,
     payload: date
+  }
+};
+
+export const deleteAllExpense = () => {
+  return {
+    type: DELETE_ALL_EXPENSE
   }
 };

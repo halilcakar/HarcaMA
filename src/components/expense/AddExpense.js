@@ -1,19 +1,25 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Container, Content, Form, Item, Label, Input, Card, Picker, CardItem, Button, Text} from 'native-base';
 
-import config from '../config';
+import config from '../../config';
 
 class AddExpense extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...props.state
+      baslik: '',
+      aciklama: '',
+      adet: '',
+      fiyat: '',
+      alisverisTipi: 'genel'
     };
+
+
   }
   onValueChange(value: string) {
     this.setState({
-      odemeSekli: value
+      alisverisTipi: value
     });
   }
   onFiyatChange(fiyat) {
@@ -41,7 +47,6 @@ class AddExpense extends Component {
       };
     });
   }
-
   render() {
     return (
       <Container>
@@ -76,14 +81,20 @@ class AddExpense extends Component {
               <CardItem>
                 <Item picker>
                   <Picker
-                    mode="dialog"
-                    placeholder="Select your SIM"
-                    selectedValue={this.state.odemeSekli}
+                    mode='dropdown'
+                    placeholder={'Alişveriş tipi'}
+                    selectedValue={this.state.alisverisTipi}
                     onValueChange={this.onValueChange.bind(this)}
                   >
-                    <Picker.Item label="Nakit" value="nakit"/>
-                    <Picker.Item label="Kredi Kartı" value="kredikarti"/>
-                    <Picker.Item label="Banka Kartı" value="bankakarti"/>
+                    /*
+                    * TODO
+                    * Itemler config dosyasından alınıp işlenecek ve sideBar'a %lik
+                    * ve toplam olarak aylık bölünecek
+                    * */
+                    <Picker.Item label="Yemek" value="yemek"/>
+                    <Picker.Item label="Market" value="market"/>
+                    <Picker.Item label="Kozmetik" value="kozmetik"/>
+                    <Picker.Item label="Elektronik" value="elektronik"/>
                   </Picker>
                 </Item>
               </CardItem>
@@ -92,31 +103,20 @@ class AddExpense extends Component {
                   <Label>Toplam :</Label>
                   <Input disabled={true} value={`${
                     isNaN(parseInt(this.state.adet) * parseFloat(this.state.fiyat)) ? 0 : parseInt(this.state.adet) * parseFloat(this.state.fiyat)
-                    } TL`}/>
+                  } TL`}/>
                 </Item>
               </CardItem>
               <Button
                 onPress={() => {
                   if (this.state.fiyat !== '' && this.state.adet !== '' && this.state.baslik !== '') {
-                    this.props.updateExpense(this.state);
+                    this.props.addExpense(this.state);
                     this.props.navigator.popToRoot();
                   }
                 }}
                 style={styles.buttonStyle}
                 full
               >
-                <Text style={{fontSize: 18}}> Kaydet </Text>
-              </Button>
-              <Button
-                onPress={() => {
-                  this.props.deleteExpense(this.state);
-                  this.props.navigator.popToRoot();
-                }}
-                style={styles.deleteButtonStyle}
-                warning
-                full
-              >
-                <Text style={{fontSize: 18}}> Sil </Text>
+                <Text style={{fontSize: 18}}> Ekle </Text>
               </Button>
             </Form>
           </Card>
@@ -137,11 +137,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     marginTop: 10
   },
-  deleteButtonStyle: {
-    width: '90%',
-    alignSelf: 'center',
-    marginBottom: 15,
-    marginTop: 10
+  innerText: {
+    paddingRight: 10
   }
 });
 

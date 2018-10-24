@@ -2,17 +2,13 @@ import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import {Container, Content, Form, Item, Label, Input, Card, Picker, CardItem, Button, Text} from 'native-base';
 
-import config from '../config';
+import config from '../../config';
 
 class AddExpense extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      baslik: '',
-      aciklama: '',
-      adet: '',
-      fiyat: '',
-      odemeSekli: 'nakit'
+      ...props.state
     };
   }
   onValueChange(value: string) {
@@ -45,6 +41,7 @@ class AddExpense extends Component {
       };
     });
   }
+
   render() {
     return (
       <Container>
@@ -95,20 +92,31 @@ class AddExpense extends Component {
                   <Label>Toplam :</Label>
                   <Input disabled={true} value={`${
                     isNaN(parseInt(this.state.adet) * parseFloat(this.state.fiyat)) ? 0 : parseInt(this.state.adet) * parseFloat(this.state.fiyat)
-                  } TL`}/>
+                    } TL`}/>
                 </Item>
               </CardItem>
               <Button
                 onPress={() => {
                   if (this.state.fiyat !== '' && this.state.adet !== '' && this.state.baslik !== '') {
-                    this.props.addExpense(this.state);
+                    this.props.updateExpense(this.state);
                     this.props.navigator.popToRoot();
                   }
                 }}
                 style={styles.buttonStyle}
                 full
               >
-                <Text style={{fontSize: 18}}> Ekle </Text>
+                <Text style={{fontSize: 18}}> Kaydet </Text>
+              </Button>
+              <Button
+                onPress={() => {
+                  this.props.deleteExpense(this.state);
+                  this.props.navigator.popToRoot();
+                }}
+                style={styles.deleteButtonStyle}
+                warning
+                full
+              >
+                <Text style={{fontSize: 18}}> Sil </Text>
               </Button>
             </Form>
           </Card>
@@ -129,8 +137,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     marginTop: 10
   },
-  innerText: {
-    paddingRight: 10
+  deleteButtonStyle: {
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 15,
+    marginTop: 10
   }
 });
 

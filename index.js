@@ -1,8 +1,8 @@
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import App from './App';
-import AddExpense from './src/components/AddExpense';
-import EditExpense from './src/components/EditExpense';
+import AddExpense from './src/components/expense/AddExpense';
+import EditExpense from './src/components/expense/EditExpense';
 import SideDrawer from './src/components/SideDrawer';
 
 import configureStore from './src/store/configureStore';
@@ -14,7 +14,7 @@ Navigation.registerComponent('Async-Storage.App', () => App, store, Provider);
 Navigation.registerComponent('Async-Storage.AddExpense', () => AddExpense);
 Navigation.registerComponent('Async-Storage.EditExpense', () => EditExpense);
 
-Navigation.registerComponent('Async-Storage.SideDrawer', () => SideDrawer);
+Navigation.registerComponent('Async-Storage.SideDrawer', () => SideDrawer, store, Provider);
 
 
 Navigation.startSingleScreenApp({
@@ -29,9 +29,9 @@ Navigation.startSingleScreenApp({
     left: {
       screen: 'Async-Storage.SideDrawer',
       disableOpenGesture: true,
-      fixedWidth: '80%',
-      passProps: {}
+      fixedWidth: '75%'
     },
     animationType: 'slide-down'
   }
 });
+

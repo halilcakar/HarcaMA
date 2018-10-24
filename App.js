@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
-import { FlatList, Alert, AsyncStorage } from 'react-native';
+import { FlatList, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
 
-import HeaderComp from './src/components/Header';
-import FooterComp from './src/components/Footer';
-import ListItemComp from './src/components/ListItem';
+import HeaderComp from './src/components/general/Header';
+import FooterComp from './src/components/general/Footer';
+import ListItemComp from './src/components/general/ListItem';
 import Spinner from './src/components/Spinner';
 import { addExpense, deleteExpense, updateExpense, changeDate } from './src/store/actions';
 
@@ -29,7 +28,6 @@ class App extends Component {
     }, 2000);
     this.props.onDateChange(new Date());
   }
-
   onPressAddExpense() {
     this.props.navigator.push({
       screen: 'Async-Storage.AddExpense',

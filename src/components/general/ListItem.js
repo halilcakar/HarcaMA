@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import _ from 'lodash';
 
-import config from '../config';
+import config from '../../config';
 
 const ListItemComp = (props) => {
   const baslik = _.truncate(_.startCase(props.item.baslik), { length: 10, separator: ' '});

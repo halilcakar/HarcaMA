@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE } from '../actions/actionTypes';
+import { ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE, DELETE_ALL_EXPENSE } from '../actions/actionTypes';
 import { AsyncStorage } from 'react-native';
 import uuidv4 from 'uuid/v4';
 
@@ -101,6 +101,15 @@ const reducer = (state = initialState, action) => {
         dailyExpense: [].concat(harcama[ud.prefix]['days'][ud.day]),
         totalMonthExpense,
         todayExpense
+      };
+    case DELETE_ALL_EXPENSE:
+      harcama = {};
+      setItem();
+      return {
+        chosenDate: new Date(),
+        dailyExpense: [],
+        todayExpense: 0,
+        totalMonthExpense: 0
       };
     case CHANGE_DATE:
       const chosenDate = action.payload;

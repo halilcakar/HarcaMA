@@ -1,1 +1,1 @@
-export { addExpense, deleteExpense, changeDate, updateExpense } from './rootActions';
+export { addExpense, deleteExpense, changeDate, updateExpense, deleteAllExpense } from './rootActions';

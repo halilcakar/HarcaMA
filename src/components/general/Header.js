@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Body, DatePicker, Left, Right, Header } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import config from '../config';
+import config from '../../config';
 
-import icon from '../assets/64x64-rev.png';
+import icon from '../../assets/64x64-rev.png';
 
 class HeaderComp extends Component {
   render() {
@@ -18,7 +18,6 @@ class HeaderComp extends Component {
         <Body style={[styles.container, styles.flex2]}>
           <DatePicker
             defaultDate={this.props.chosenDate}
-            minimumDate={new Date(2018, 0, 1)}
             maximumDate={new Date()}
             locale={'tr-TR'}
             timeZoneOffsetInMinutes={undefined}
