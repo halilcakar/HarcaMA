@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
-import Prompt from 'react-native-prompt-crossplatform';
-import {Container, Content, Form, Item, Label, Input, Card, Picker, CardItem, Button, Text} from 'native-base';
+import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
+import { Container, Content, Form, Item, Label, Input, Card, Picker, CardItem, Button, Text } from 'native-base';
 
 import config from '../../config';
 
@@ -13,24 +12,25 @@ class AddExpense extends Component {
       aciklama: '',
       adet: '',
       fiyat: '',
-      alisverisTipi: 'evGider',
-      visiblePrompt: false,
-      promptValue: ''
+      alisverisTipi: 'evGider'
+      // visiblePrompt: false,
+      // promptValue: ''
     };
-
-
   }
+
   onValueChange(value: string) {
     this.setState({
       alisverisTipi: value
     });
   }
+
   onFiyatChange(fiyat) {
-    if(fiyat === '') {
+    if (fiyat === '') {
       fiyat = '';
-    } else {
-      fiyat = fiyat.replace(new RegExp(',','gm'), '')
-        .replace(new RegExp('-','gm'), '');
+    }
+    else {
+      fiyat = fiyat.replace(new RegExp(',', 'gm'), '')
+        .replace(new RegExp('-', 'gm'), '');
       fiyat = parseInt(fiyat).toString();
     }
     fiyat.toString();
@@ -41,8 +41,9 @@ class AddExpense extends Component {
       };
     });
   }
+
   onAdetChange(adet) {
-    adet =  (!/^\d+$/.test(adet) ? '' : adet).toString();
+    adet = (!/^\d+$/.test(adet) ? '' : adet).toString();
     this.setState(prevState => {
       return {
         ...prevState,
@@ -50,6 +51,13 @@ class AddExpense extends Component {
       };
     });
   }
+
+  pickItemHandler() {
+    return config.expenseTypes.map(({label, value}, key) => {
+      return <Picker.Item label={label} value={value} key={key}/>;
+    });
+  }
+
   render() {
     return (
       <Container>
@@ -59,7 +67,7 @@ class AddExpense extends Component {
               <CardItem>
                 <Item inlineLabel>
                   <Label>Başlık:</Label>
-                  <Input onChangeText={(baslik) => this.setState({baslik})} value={this.state.baslik}/>
+                  <Input onChangeText={(baslik) => this.setState({ baslik })} value={this.state.baslik}/>
                 </Item>
               </CardItem>
               <CardItem>
@@ -77,7 +85,8 @@ class AddExpense extends Component {
               <CardItem>
                 <Item inlineLabel>
                   <Label>Birim Fiyat:</Label>
-                  <Input onChangeText={this.onFiyatChange.bind(this)} value={this.state.fiyat} keyboardType={'numeric'}/>
+                  <Input onChangeText={this.onFiyatChange.bind(this)} value={this.state.fiyat}
+                         keyboardType={'numeric'}/>
                   <Text style={styles.innerText}>TL</Text>
                 </Item>
               </CardItem>
@@ -89,19 +98,20 @@ class AddExpense extends Component {
                     selectedValue={this.state.alisverisTipi}
                     onValueChange={this.onValueChange.bind(this)}
                   >
-                    <Picker.Item label="Ev Giderleri(Kira, boya vs.)" value="evGider"/>
+                    {/*<Picker.Item label="Ev Giderleri(Kira, boya vs.)" value="evGider"/>
                     <Picker.Item label="Yemek" value="yemek"/>
                     <Picker.Item label="Sağlık" value="saglik"/>
                     <Picker.Item label="Market" value="market"/>
                     <Picker.Item label="Kozmetik" value="kozmetik"/>
                     <Picker.Item label="Elektronik" value="elektronik"/>
                     <Picker.Item label="Kıyafet" value="kiyafet"/>
-                    <Picker.Item label="Okul" value="okul"/>
+                    <Picker.Item label="Okul" value="okul"/>*/}
+                    { this.pickItemHandler() }
                   </Picker>
 
-                  <Button onPress={() => this.setState({ visiblePrompt: true })} bordered success>
+                  {/*<Button onPress={() => this.setState({ visiblePrompt: true })} bordered success>
                     <Text>Ekle</Text>
-                  </Button>
+                  </Button>*/}
                 </Item>
               </CardItem>
               <CardItem>
@@ -109,7 +119,7 @@ class AddExpense extends Component {
                   <Label>Toplam :</Label>
                   <Input disabled={true} value={`${
                     isNaN(parseInt(this.state.adet) * parseFloat(this.state.fiyat)) ? 0 : parseInt(this.state.adet) * parseFloat(this.state.fiyat)
-                  } TL`}/>
+                    } TL`}/>
                 </Item>
               </CardItem>
               <Button
@@ -122,12 +132,12 @@ class AddExpense extends Component {
                 style={styles.buttonStyle}
                 full
               >
-                <Text style={{fontSize: 18}}> Ekle </Text>
+                <Text style={{ fontSize: 18 }}> Ekle </Text>
               </Button>
             </Form>
           </Card>
         </Content>
-        <Prompt
+        {/*<Prompt
           title="Kategori Ekle"
           placeholder="Yeni Kategori"
           inputPlaceholder={'Yeni Kategori'}
@@ -144,7 +154,7 @@ class AddExpense extends Component {
               visiblePrompt: false,
             });
           }}
-        />
+        />*/}
       </Container>
     );
   }
@@ -164,9 +174,7 @@ const styles = StyleSheet.create({
   innerText: {
     paddingRight: 10
   },
-  prStatu: {
-
-  }
+  prStatu: {}
 });
 
 export default AddExpense;

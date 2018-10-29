@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Alert, Image, StyleSheet } from 'react-native';
-import { Container, Content, Header, Text, Button, H1 } from 'native-base';
+import { Container, Content, Header, Text, Button, H1, Left, Body, Right } from 'native-base';
 
 import icon from '../assets/1024x1024-rev.png';
 import config from '../config';
@@ -31,6 +32,20 @@ class SideDrawer extends Component {
     );
   }
 
+  expenseTypes() {
+    return config.expenseTypes.map(({label, value}, key) => {
+      return (<Button disabled style={[styles.mt10]} info full key={key}>
+        <Left style={{ marginLeft: 20 }}>
+          <Text style={{ color: 'white' }} uppercase={false}>{_.truncate(label, { length: 12, omission: '' })}</Text>
+        </Left>
+        <Body>
+          <Text style={{ color: 'white' }} uppercase={false}>{value}</Text>
+        </Body>
+        <Right />
+      </Button>);
+    });
+  }
+
   render() {
     return (
       <Container>
@@ -40,9 +55,7 @@ class SideDrawer extends Component {
         </Header>
         <Content padder style={styles.topContent}>
 
-          <Button style={styles.mt10} full light>
-            <Text uppercase={false}>Aylık Gider Tablosu</Text>
-          </Button>
+          { this.expenseTypes() }
           <Button onPress={this.onDeleteAllPress} full style={styles.mt10} danger>
             <Text>Bütün harcamaları sil</Text>
           </Button>

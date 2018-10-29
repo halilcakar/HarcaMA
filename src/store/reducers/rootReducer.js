@@ -2,7 +2,32 @@ import { ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE, DELETE_ALL_EX
 import { AsyncStorage } from 'react-native';
 import uuidv4 from 'uuid/v4';
 
-var harcama = {};
+
+
+/*
+* <Picker.Item label="Ev Giderleri(Kira, boya vs.)" value="evGider"/>
+  <Picker.Item label="Yemek" value="yemek"/>
+  <Picker.Item label="Sağlık" value="saglik"/>
+  <Picker.Item label="Market" value="market"/>
+  <Picker.Item label="Kozmetik" value="kozmetik"/>
+  <Picker.Item label="Elektronik" value="elektronik"/>
+  <Picker.Item label="Kıyafet" value="kiyafet"/>
+  <Picker.Item label="Okul" value="okul"/>
+*
+* */
+
+
+var harcama = {
+  expenseTypes: [
+    { label: 'Ev Giderleri(Kira, boya vs.)', value: 'evGider' },
+    { label: 'Yemek', value: 'yemek' },
+    { label: 'Sağlık', value: 'saglik' },
+    { label: 'Kozmetik', value: 'kozmetik' },
+    { label: 'Elektronik', value: 'elektronik' },
+    { label: 'Kıyafet', value: 'kiyafet' },
+    { label: 'Okul', value: 'okul' },
+  ],
+};
 const initialState = {
   chosenDate: new Date(),
   dailyExpense: [],
