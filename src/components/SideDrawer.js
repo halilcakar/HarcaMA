@@ -55,7 +55,13 @@ class SideDrawer extends Component {
         </Header>
         <Content padder style={styles.topContent}>
 
-          { this.expenseTypes() }
+          {/*{ this.expenseTypes() }*/}
+          <Button full style={styles.mt10} info>
+            <Text>Ay Raporu</Text>
+          </Button>
+          <Button full style={styles.mt10} info>
+            <Text>Yıl Raporu</Text>
+          </Button>
           <Button onPress={this.onDeleteAllPress} full style={styles.mt10} danger>
             <Text>Bütün harcamaları sil</Text>
           </Button>
