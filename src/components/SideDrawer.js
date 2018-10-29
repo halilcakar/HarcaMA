@@ -39,10 +39,10 @@ class SideDrawer extends Component {
           <H1 style={styles.h1}>HarcaMA</H1>
         </Header>
         <Content padder style={styles.topContent}>
-          <Button style={styles.mt10} full light>
-            <Text uppercase={false}>Değerlendirme</Text>
-          </Button>
 
+          <Button style={styles.mt10} full light>
+            <Text uppercase={false}>Aylık Gider Tablosu</Text>
+          </Button>
           <Button onPress={this.onDeleteAllPress} full style={styles.mt10} danger>
             <Text>Bütün harcamaları sil</Text>
           </Button>

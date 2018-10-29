@@ -5000,6 +5000,11 @@ react-native-navigation@^1.1.490:
   dependencies:
     lodash "4.x.x"
 
+react-native-prompt-crossplatform@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-prompt-crossplatform/-/react-native-prompt-crossplatform-1.6.1.tgz#0186c7de473fcbc00a50b6b1f599fb2193d880a7"
+  integrity sha1-AYbH3kc/y8AKULax9Zn7IZPYgKc=
+
 react-native-spinner-button@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-native-spinner-button/-/react-native-spinner-button-1.0.2.tgz#402b0fd3978a5bb1193d5d91b3b6225076419b6b"

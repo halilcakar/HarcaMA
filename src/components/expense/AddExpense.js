@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
+import Prompt from 'react-native-prompt-crossplatform';
 import {Container, Content, Form, Item, Label, Input, Card, Picker, CardItem, Button, Text} from 'native-base';
 
 import config from '../../config';
@@ -12,7 +13,9 @@ class AddExpense extends Component {
       aciklama: '',
       adet: '',
       fiyat: '',
-      alisverisTipi: 'genel'
+      alisverisTipi: 'evGider',
+      visiblePrompt: false,
+      promptValue: ''
     };
 
 
@@ -81,21 +84,24 @@ class AddExpense extends Component {
               <CardItem>
                 <Item picker>
                   <Picker
-                    mode='dropdown'
+                    mode='dialog'
                     placeholder={'Alişveriş tipi'}
                     selectedValue={this.state.alisverisTipi}
                     onValueChange={this.onValueChange.bind(this)}
                   >
-                    /*
-                    * TODO
-                    * Itemler config dosyasından alınıp işlenecek ve sideBar'a %lik
-                    * ve toplam olarak aylık bölünecek
-                    * */
+                    <Picker.Item label="Ev Giderleri(Kira, boya vs.)" value="evGider"/>
                     <Picker.Item label="Yemek" value="yemek"/>
+                    <Picker.Item label="Sağlık" value="saglik"/>
                     <Picker.Item label="Market" value="market"/>
                     <Picker.Item label="Kozmetik" value="kozmetik"/>
                     <Picker.Item label="Elektronik" value="elektronik"/>
+                    <Picker.Item label="Kıyafet" value="kiyafet"/>
+                    <Picker.Item label="Okul" value="okul"/>
                   </Picker>
+
+                  <Button onPress={() => this.setState({ visiblePrompt: true })} bordered success>
+                    <Text>Ekle</Text>
+                  </Button>
                 </Item>
               </CardItem>
               <CardItem>
@@ -121,6 +127,24 @@ class AddExpense extends Component {
             </Form>
           </Card>
         </Content>
+        <Prompt
+          title="Kategori Ekle"
+          placeholder="Yeni Kategori"
+          inputPlaceholder={'Yeni Kategori'}
+          isVisible={this.state.visiblePrompt}
+          submitButtonText={'Ekle'}
+          cancelButtonText={'İptal'}
+          btnTextStyle={{ color: config.navBarBackgroundColor }}
+          headingStyle={{ color: config.navBarBackgroundColor }}
+          inputStyle={{ borderBottomWidth: 0 }}
+          onChangeText={(text) => this.setState({ promptValue: text })}
+          onCancel={() => this.setState({ promptValue: '', visiblePrompt: false })}
+          onSubmit={() => {
+            this.setState({
+              visiblePrompt: false,
+            });
+          }}
+        />
       </Container>
     );
   }
@@ -139,6 +163,9 @@ const styles = StyleSheet.create({
   },
   innerText: {
     paddingRight: 10
+  },
+  prStatu: {
+
   }
 });
 
