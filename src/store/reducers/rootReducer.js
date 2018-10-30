@@ -2,22 +2,12 @@ import { ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE, DELETE_ALL_EX
 import { AsyncStorage } from 'react-native';
 import uuidv4 from 'uuid/v4';
 
-
-
-/*
-* <Picker.Item label="Ev Giderleri(Kira, boya vs.)" value="evGider"/>
-  <Picker.Item label="Yemek" value="yemek"/>
-  <Picker.Item label="Sağlık" value="saglik"/>
-  <Picker.Item label="Market" value="market"/>
-  <Picker.Item label="Kozmetik" value="kozmetik"/>
-  <Picker.Item label="Elektronik" value="elektronik"/>
-  <Picker.Item label="Kıyafet" value="kiyafet"/>
-  <Picker.Item label="Okul" value="okul"/>
-*
-* */
-
-
-var harcama = {
+var harcama = {};
+const initialState = {
+  chosenDate: new Date(),
+  dailyExpense: [],
+  todayExpense: 0,
+  totalMonthExpense: 0,
   expenseTypes: [
     { label: 'Ev Giderleri(Kira, boya vs.)', value: 'evGider' },
     { label: 'Yemek', value: 'yemek' },
@@ -26,13 +16,7 @@ var harcama = {
     { label: 'Elektronik', value: 'elektronik' },
     { label: 'Kıyafet', value: 'kiyafet' },
     { label: 'Okul', value: 'okul' },
-  ],
-};
-const initialState = {
-  chosenDate: new Date(),
-  dailyExpense: [],
-  todayExpense: 0,
-  totalMonthExpense: 0
+  ]
 };
 const getDateString = date => {
   return { prefix: date.getFullYear()+'-'+(date.getMonth()+1), day: date.getDate() };
@@ -61,14 +45,23 @@ const setItem = async () => {
 
 const getItems = async () => {
   try {
-    // await AsyncStorage.removeItem('HarcaMA');
     harcama = await AsyncStorage.getItem('HarcaMA');
-    if(harcama == null) { harcama = '{}'; }
+    if(harcama == null) { harcama = '{"expenseTypes":[{"label":"Ev Giderleri(Kira, boya vs.)","value":"evGider"},{"label":"Yemek","value":"yemek"},{"label":"Sağlık","value":"saglik"},{"label":"Kozmetik","value":"kozmetik"},{"label":"Elektronik","value":"elektronik"},{"label":"Kıyafet","value":"kiyafet"},{"label":"Okul","value":"okul"}]}'; }
     harcama = JSON.parse(harcama);
     console.log(harcama);
   }
   catch (e) {
-    harcama = {};
+    harcama = {
+      expenseTypes: [
+        { label: 'Ev Giderleri(Kira, boya vs.)', value: 'evGider' },
+        { label: 'Yemek', value: 'yemek' },
+        { label: 'Sağlık', value: 'saglik' },
+        { label: 'Kozmetik', value: 'kozmetik' },
+        { label: 'Elektronik', value: 'elektronik' },
+        { label: 'Kıyafet', value: 'kiyafet' },
+        { label: 'Okul', value: 'okul' },
+      ]
+    };
   }
 };
 getItems();

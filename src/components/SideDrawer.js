@@ -9,12 +9,10 @@ import config from '../config';
 import { deleteAllExpense } from '../store/actions';
 
 class SideDrawer extends Component {
-
   constructor(props) {
     super(props);
     this.onDeleteAllPress = this.onDeleteAllPress.bind(this);
   }
-
   onDeleteAllPress() {
     Alert.alert(
       'Dikkat',
@@ -31,7 +29,6 @@ class SideDrawer extends Component {
       }
     );
   }
-
   expenseTypes() {
     return config.expenseTypes.map(({label, value}, key) => {
       return (<Button disabled style={[styles.mt10]} info full key={key}>
@@ -47,6 +44,8 @@ class SideDrawer extends Component {
   }
 
   render() {
+    let date = new Date();
+    date = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
     return (
       <Container>
         <Header style={styles.header} androidStatusBarColor={config.statusBarColor}>
@@ -56,10 +55,13 @@ class SideDrawer extends Component {
         <Content padder style={styles.topContent}>
 
           {/*{ this.expenseTypes() }*/}
-          <Button full style={styles.mt10} info>
+          <Button full disabled bordered style={styles.disabledButtonStyle}>
+            <Text style={styles.innerText}>Bugün: { date }</Text>
+          </Button>
+          <Button full style={styles.mt10}>
             <Text>Ay Raporu</Text>
           </Button>
-          <Button full style={styles.mt10} info>
+          <Button full style={styles.mt10}>
             <Text>Yıl Raporu</Text>
           </Button>
           <Button onPress={this.onDeleteAllPress} full style={styles.mt10} danger>
@@ -87,6 +89,16 @@ const styles = StyleSheet.create({
   },
   mt10: {
     marginTop: 10
+  },
+  disabledButtonStyle: {
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+  },
+  innerText: {
+    color: config.navBarBackgroundColor,
+    fontSize: 18
   },
   topContent: {
     borderBottomWidth: 0,

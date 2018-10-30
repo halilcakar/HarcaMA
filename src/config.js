@@ -79,14 +79,5 @@ export default {
       iptal: 'Absagen',
       sil: 'Löschen'
     }
-  },
-  expenseTypes: [
-    { label: 'Ev Giderleri(Kira, boya vs.)', value: 'evGider' },
-    { label: 'Yemek', value: 'yemek' },
-    { label: 'Sağlık', value: 'saglik' },
-    { label: 'Kozmetik', value: 'kozmetik' },
-    { label: 'Elektronik', value: 'elektronik' },
-    { label: 'Kıyafet', value: 'kiyafet' },
-    { label: 'Okul', value: 'okul' },
-  ],
+  }
 }

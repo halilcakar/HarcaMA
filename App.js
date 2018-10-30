@@ -23,10 +23,10 @@ class App extends Component {
   };
 
   componentDidMount() {
+    this.props.onDateChange(new Date());
     setTimeout(() => {
         this.setState({ isLoading: false });
     }, 2000);
-    this.props.onDateChange(new Date());
   }
   onPressAddExpense() {
     this.props.navigator.push({
@@ -39,7 +39,8 @@ class App extends Component {
         statusBarColor: '#167F60'
       },
       passProps: {
-        addExpense: data => this.props.onAddExpense(data)
+        addExpense: data => this.props.onAddExpense(data),
+        expenseTypes: this.props.expenseTypes
       }
     });
   }
@@ -73,7 +74,8 @@ class App extends Component {
       passProps: {
         state: item,
         updateExpense: item => this.updateExpense(item),
-        deleteExpense: (item) => this.onDeletePress(item)
+        deleteExpense: (item) => this.onDeletePress(item),
+        expenseTypes: this.props.expenseTypes
       }
     });
   }
@@ -117,13 +119,12 @@ class App extends Component {
 }
 
 const mapStateToProps = ({ expense }) =>{
-  const { chosenDate, dailyExpense, todayExpense, totalMonthExpense } = expense;
-  return { chosenDate, dailyExpense, todayExpense, totalMonthExpense };
+  const { chosenDate, dailyExpense, todayExpense, totalMonthExpense, expenseTypes } = expense;
+  return { chosenDate, dailyExpense, todayExpense, totalMonthExpense, expenseTypes };
 };
 const mapDispatchToProps = dispatch => {
     return {
       onDateChange: date => dispatch(changeDate(date)),
-
       onAddExpense: data => dispatch(addExpense(data)),
       onDeleteExpense: data => dispatch(deleteExpense(data)),
       onUpdateExpense: data => dispatch(updateExpense(data))

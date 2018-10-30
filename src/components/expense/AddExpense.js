@@ -13,8 +13,6 @@ class AddExpense extends Component {
       adet: '',
       fiyat: '',
       alisverisTipi: 'evGider'
-      // visiblePrompt: false,
-      // promptValue: ''
     };
   }
 
@@ -23,7 +21,6 @@ class AddExpense extends Component {
       alisverisTipi: value
     });
   }
-
   onFiyatChange(fiyat) {
     if (fiyat === '') {
       fiyat = '';
@@ -41,7 +38,6 @@ class AddExpense extends Component {
       };
     });
   }
-
   onAdetChange(adet) {
     adet = (!/^\d+$/.test(adet) ? '' : adet).toString();
     this.setState(prevState => {
@@ -51,11 +47,12 @@ class AddExpense extends Component {
       };
     });
   }
-
   pickItemHandler() {
-    return config.expenseTypes.map(({label, value}, key) => {
-      return <Picker.Item label={label} value={value} key={key}/>;
-    });
+    return (
+      this.props.expenseTypes.map(({label, value}, key) => {
+        return <Picker.Item label={label} value={value} key={key}/>;
+      })
+    );
   }
 
   render() {
@@ -98,20 +95,8 @@ class AddExpense extends Component {
                     selectedValue={this.state.alisverisTipi}
                     onValueChange={this.onValueChange.bind(this)}
                   >
-                    {/*<Picker.Item label="Ev Giderleri(Kira, boya vs.)" value="evGider"/>
-                    <Picker.Item label="Yemek" value="yemek"/>
-                    <Picker.Item label="Sağlık" value="saglik"/>
-                    <Picker.Item label="Market" value="market"/>
-                    <Picker.Item label="Kozmetik" value="kozmetik"/>
-                    <Picker.Item label="Elektronik" value="elektronik"/>
-                    <Picker.Item label="Kıyafet" value="kiyafet"/>
-                    <Picker.Item label="Okul" value="okul"/>*/}
                     { this.pickItemHandler() }
                   </Picker>
-
-                  {/*<Button onPress={() => this.setState({ visiblePrompt: true })} bordered success>
-                    <Text>Ekle</Text>
-                  </Button>*/}
                 </Item>
               </CardItem>
               <CardItem>
@@ -125,6 +110,7 @@ class AddExpense extends Component {
               <Button
                 onPress={() => {
                   if (this.state.fiyat !== '' && this.state.adet !== '' && this.state.baslik !== '') {
+                    console.log(this.state);
                     this.props.addExpense(this.state);
                     this.props.navigator.popToRoot();
                   }
@@ -132,29 +118,11 @@ class AddExpense extends Component {
                 style={styles.buttonStyle}
                 full
               >
-                <Text style={{ fontSize: 18 }}> Ekle </Text>
+                <Text style={styles.fs18}> Ekle </Text>
               </Button>
             </Form>
           </Card>
         </Content>
-        {/*<Prompt
-          title="Kategori Ekle"
-          placeholder="Yeni Kategori"
-          inputPlaceholder={'Yeni Kategori'}
-          isVisible={this.state.visiblePrompt}
-          submitButtonText={'Ekle'}
-          cancelButtonText={'İptal'}
-          btnTextStyle={{ color: config.navBarBackgroundColor }}
-          headingStyle={{ color: config.navBarBackgroundColor }}
-          inputStyle={{ borderBottomWidth: 0 }}
-          onChangeText={(text) => this.setState({ promptValue: text })}
-          onCancel={() => this.setState({ promptValue: '', visiblePrompt: false })}
-          onSubmit={() => {
-            this.setState({
-              visiblePrompt: false,
-            });
-          }}
-        />*/}
       </Container>
     );
   }
@@ -174,7 +142,9 @@ const styles = StyleSheet.create({
   innerText: {
     paddingRight: 10
   },
-  prStatu: {}
+  fs18: {
+    fontSize: 18
+  }
 });
 
 export default AddExpense;

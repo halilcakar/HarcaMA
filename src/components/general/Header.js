@@ -12,19 +12,20 @@ class HeaderComp extends Component {
       <Header style={{ backgroundColor: config.navBarBackgroundColor }} androidStatusBarColor={config.statusBarColor}>
         <Left style={[styles.container, styles.flex1]}>
           <TouchableOpacity onPress={this.props.onIconPress} style={styles.flex1}>
-            <Image source={icon} style={{ width: 36, height: 36 }} />
+            <Image source={icon} style={styles.image} />
           </TouchableOpacity>
         </Left>
         <Body style={[styles.container, styles.flex2]}>
           <DatePicker
+            chosenDate={this.props.chosenDate}
             defaultDate={this.props.chosenDate}
-            maximumDate={new Date()}
-            locale={'tr-TR'}
+            maximumDate={(new Date().setDate(new Date().getDate() + 1))}
+            locale={'tr'}
             timeZoneOffsetInMinutes={undefined}
             modalTransparent={true}
             animationType={'fade'}
             androidMode={'default'}
-            textStyle={{ color: 'white', fontSize: 25 }}
+            textStyle={styles.datePickerTextStyle}
             onDateChange={this.props.setDate}
           />
         </Body>
@@ -51,6 +52,14 @@ const styles = StyleSheet.create({
   },
   flex2: {
     flex: 2
+  },
+  image: {
+    width: 36,
+    height: 36
+  },
+  datePickerTextStyle: {
+    color: 'white',
+    fontSize: 25
   }
 });
 

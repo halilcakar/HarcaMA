@@ -4,24 +4,26 @@ import {Container, Content, Form, Item, Label, Input, Card, Picker, CardItem, Bu
 
 import config from '../../config';
 
-class AddExpense extends Component {
+class EditExpense extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ...props.state
     };
   }
+
   onValueChange(value: string) {
     this.setState({
-      odemeSekli: value
+      alisverisTipi: value
     });
   }
   onFiyatChange(fiyat) {
-    if(fiyat === '') {
+    if (fiyat === '') {
       fiyat = '';
-    } else {
-      fiyat = fiyat.replace(new RegExp(',','gm'), '')
-        .replace(new RegExp('-','gm'), '');
+    }
+    else {
+      fiyat = fiyat.replace(new RegExp(',', 'gm'), '')
+        .replace(new RegExp('-', 'gm'), '');
       fiyat = parseInt(fiyat).toString();
     }
     fiyat.toString();
@@ -33,13 +35,21 @@ class AddExpense extends Component {
     });
   }
   onAdetChange(adet) {
-    adet =  (!/^\d+$/.test(adet) ? '' : adet).toString();
+    adet = (!/^\d+$/.test(adet) ? '' : adet).toString();
     this.setState(prevState => {
       return {
         ...prevState,
         adet
       };
     });
+  }
+
+  pickItemHandler() {
+    return (
+      this.props.expenseTypes.map(({label, value}, key) => {
+        return <Picker.Item label={label} value={value} key={key}/>;
+      })
+    );
   }
 
   render() {
@@ -78,12 +88,10 @@ class AddExpense extends Component {
                   <Picker
                     mode="dialog"
                     placeholder="Select your SIM"
-                    selectedValue={this.state.odemeSekli}
+                    selectedValue={this.state.alisverisTipi}
                     onValueChange={this.onValueChange.bind(this)}
                   >
-                    <Picker.Item label="Nakit" value="nakit"/>
-                    <Picker.Item label="Kredi Kartı" value="kredikarti"/>
-                    <Picker.Item label="Banka Kartı" value="bankakarti"/>
+                    { this.pickItemHandler() }
                   </Picker>
                 </Item>
               </CardItem>
@@ -105,7 +113,7 @@ class AddExpense extends Component {
                 style={styles.buttonStyle}
                 full
               >
-                <Text style={{fontSize: 18}}> Kaydet </Text>
+                <Text style={styles.fs18}> Kaydet </Text>
               </Button>
               <Button
                 onPress={() => {
@@ -116,7 +124,7 @@ class AddExpense extends Component {
                 warning
                 full
               >
-                <Text style={{fontSize: 18}}> Sil </Text>
+                <Text style={styles.fs18}> Sil </Text>
               </Button>
             </Form>
           </Card>
@@ -142,7 +150,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 15,
     marginTop: 10
+  },
+  fs18: {
+    fontSize: 18
   }
 });
 
-export default AddExpense;
+export default EditExpense;
