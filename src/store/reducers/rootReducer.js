@@ -1,8 +1,8 @@
-import { ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE, DELETE_ALL_EXPENSE } from '../actions/actionTypes';
+import { ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE, DELETE_ALL_EXPENSE, REPORT_DATA } from '../actions/actionTypes';
 import { AsyncStorage } from 'react-native';
 import uuidv4 from 'uuid/v4';
 
-var harcama = {};
+let harcama = {};
 const initialState = {
   chosenDate: new Date(),
   dailyExpense: [],
@@ -48,7 +48,6 @@ const getItems = async () => {
     harcama = await AsyncStorage.getItem('HarcaMA');
     if(harcama == null) { harcama = '{"expenseTypes":[{"label":"Ev Giderleri(Kira, boya vs.)","value":"evGider"},{"label":"Yemek","value":"yemek"},{"label":"Sağlık","value":"saglik"},{"label":"Kozmetik","value":"kozmetik"},{"label":"Elektronik","value":"elektronik"},{"label":"Kıyafet","value":"kiyafet"},{"label":"Okul","value":"okul"}]}'; }
     harcama = JSON.parse(harcama);
-    console.log(harcama);
   }
   catch (e) {
     harcama = {
@@ -143,6 +142,10 @@ const reducer = (state = initialState, action) => {
         todayExpense,
         chosenDate
       };
+    case REPORT_DATA:
+    return {
+      ...harcama
+    };
     default:
       return state;
   }

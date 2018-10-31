@@ -10,6 +10,7 @@ import com.facebook.soloader.SoLoader;
 
 import com.reactnativenavigation.NavigationApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.horcrux.svg.SvgPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,8 +24,9 @@ public class MainApplication extends NavigationApplication {
 
   protected List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
-      new VectorIconsPackage()
-      );
+      new VectorIconsPackage(),
+      new SvgPackage()
+    );
   }
 
   @Override

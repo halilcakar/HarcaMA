@@ -3,12 +3,12 @@ import { createStore, combineReducers } from 'redux';
 import rootReducer from './reducers/rootReducer';
 
 
-const rootReducers = combineReducers({
+const reducers = combineReducers({
   expense: rootReducer
 });
 
 const configureStore = () => {
-  return createStore(rootReducers);
+  return createStore(reducers);
 };
 
 export default configureStore;
