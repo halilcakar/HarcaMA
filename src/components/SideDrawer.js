@@ -76,7 +76,7 @@ class SideDrawer extends Component {
 
   render() {
     let date = new Date();
-    date = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+    date = `${(date.getDate() < 10) ? `0`+date.getDate() : date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
     return (
       <Container>
         <Header style={styles.header} androidStatusBarColor={config.statusBarColor}>

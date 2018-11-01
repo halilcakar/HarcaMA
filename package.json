@@ -12,6 +12,7 @@
     "native-base": "^2.8.1",
     "react": "16.5.0",
     "react-native": "0.57.1",
+    "react-native-datepicker": "^1.7.2",
     "react-native-navigation": "^1.1.490",
     "react-native-prompt-crossplatform": "^1.6.1",
     "react-native-spinner-button": "^1.0.2",

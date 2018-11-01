@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Body, DatePicker, Left, Right, Header } from 'native-base';
+import DatePicker from 'react-native-datepicker';
+import { Body, Left, Right, Header } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import config from '../../config';
 
@@ -16,17 +17,40 @@ class HeaderComp extends Component {
           </TouchableOpacity>
         </Left>
         <Body style={[styles.container, styles.flex2]}>
-          <DatePicker
+          {/*<DatePicker
             chosenDate={this.props.chosenDate}
             defaultDate={this.props.chosenDate}
             maximumDate={(new Date().setDate(new Date().getDate() + 1))}
             locale={'tr'}
+            format="DD-MM-YYYY"
             timeZoneOffsetInMinutes={undefined}
             modalTransparent={true}
             animationType={'fade'}
             androidMode={'default'}
             textStyle={styles.datePickerTextStyle}
             onDateChange={this.props.setDate}
+          />*/}
+          <DatePicker
+            date={this.props.chosenDate}
+            mode="date"
+            format="DD/MM/YYYY"
+            maxDate={new Date()}
+            showIcon={false}
+            duration={500}
+            customStyles={{
+              dateInput: {
+                borderWidth: 0
+              },
+              dateText: {
+                fontSize: 25,
+                color: 'white',
+                fontWeight: 'bold'
+              }
+            }}
+            onDateChange={date => {
+              date = date.split('/').reverse().join('/');
+              this.props.setDate(new Date(date))
+            }}
           />
         </Body>
         <Right style={[styles.container, styles.flex1]}>
