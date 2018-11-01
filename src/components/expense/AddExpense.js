@@ -14,6 +14,8 @@ class AddExpense extends Component {
       fiyat: '',
       alisverisTipi: 'evGider'
     };
+
+    this.pickItemHandler = this.pickItemHandler.bind(this);
   }
 
   onValueChange(value: string) {
@@ -48,8 +50,17 @@ class AddExpense extends Component {
     });
   }
   pickItemHandler() {
+    const expenseTypes = [
+      {"label":"Ev Giderleri(Kira, boya vs.)","value":"evGider"},
+      {"label":"Yemek","value":"yemek"},
+      {"label":"Sağlık","value":"saglik"},
+      {"label":"Kozmetik","value":"kozmetik"},
+      {"label":"Elektronik","value":"elektronik"},
+      {"label":"Kıyafet","value":"kiyafet"},
+      {"label":"Okul","value":"okul"}
+    ];
     return (
-      this.props.expenseTypes.map(({label, value}, key) => {
+      expenseTypes.map(({label, value}, key) => {
         return <Picker.Item label={label} value={value} key={key}/>;
       })
     );

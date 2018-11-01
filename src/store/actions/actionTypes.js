@@ -5,4 +5,3 @@ export const UPDATE_EXPENSE = 'UPDATE_EXPENSE';
 export const CHANGE_DATE = 'CHANGE_DATE';
 export const DELETE_ALL_EXPENSE = 'DELETE_ALL_EXPENSE';
 
-export const REPORT_DATA = 'REPORT_DATA';

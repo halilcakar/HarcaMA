@@ -30,7 +30,7 @@ class App extends Component {
   }
   onPressAddExpense() {
     this.props.navigator.push({
-      screen: 'Async-Storage.AddExpense',
+      screen: 'HarcaMA.AddExpense',
       title: 'Harcama Ekle',
       navigatorStyle: {
         navBarBackgroundColor: '#1DAA80',
@@ -40,7 +40,6 @@ class App extends Component {
       },
       passProps: {
         addExpense: data => this.props.onAddExpense(data),
-        expenseTypes: this.props.expenseTypes
       }
     });
   }
@@ -63,7 +62,7 @@ class App extends Component {
   }
   onEditPress(item) {
     this.props.navigator.push({
-      screen: 'Async-Storage.EditExpense',
+      screen: 'HarcaMA.EditExpense',
       title: 'Harcama Düzenle',
       navigatorStyle: {
         navBarBackgroundColor: '#1DAA80',
@@ -119,8 +118,8 @@ class App extends Component {
 }
 
 const mapStateToProps = ({ expense }) =>{
-  const { chosenDate, dailyExpense, todayExpense, totalMonthExpense, expenseTypes } = expense;
-  return { chosenDate, dailyExpense, todayExpense, totalMonthExpense, expenseTypes };
+  const { chosenDate, dailyExpense, todayExpense, totalMonthExpense } = expense;
+  return { chosenDate, dailyExpense, todayExpense, totalMonthExpense };
 };
 const mapDispatchToProps = dispatch => {
     return {

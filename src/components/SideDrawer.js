@@ -6,12 +6,13 @@ import { Container, Content, Header, Text, Button, H1, Left, Body, Right } from 
 
 import icon from '../assets/1024x1024-rev.png';
 import config from '../config';
-import { deleteAllExpense } from '../store/actions';
+import { deleteAllExpense, reportData } from '../store/actions';
 
 class SideDrawer extends Component {
   constructor(props) {
     super(props);
     this.onDeleteAllPress = this.onDeleteAllPress.bind(this);
+    this.onMonthReportPress = this.onMonthReportPress.bind(this);
   }
   onDeleteAllPress() {
     Alert.alert(
@@ -43,6 +44,23 @@ class SideDrawer extends Component {
     });
   }
 
+  onMonthReportPress() {
+    this.props.navigator.toggleDrawer();
+    this.props.navigator.push({
+      screen: 'HarcaMA.MonthReport',
+      title: 'Aylık Rapor',
+      navigatorStyle: {
+        navBarBackgroundColor: '#1DAA80',
+        navBarTextColor: 'white',
+        navBarButtonColor: 'white',
+        statusBarColor: '#167F60'
+      },
+      passProps: {
+        chosenDate: this.props.chosenDate
+      }
+    });
+  }
+
   render() {
     let date = new Date();
     date = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
@@ -53,12 +71,10 @@ class SideDrawer extends Component {
           <H1 style={styles.h1}>HarcaMA</H1>
         </Header>
         <Content padder style={styles.topContent}>
-
-          {/*{ this.expenseTypes() }*/}
           <Button full disabled bordered style={styles.disabledButtonStyle}>
             <Text style={styles.innerText}>Bugün: { date }</Text>
           </Button>
-          <Button full style={styles.mt10}>
+          <Button onPress={this.onMonthReportPress} full style={styles.mt10}>
             <Text>Ay Raporu</Text>
           </Button>
           <Button full style={styles.mt10}>
@@ -115,10 +131,16 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = ({expense}) => {
+  return {
+      chosenDate: expense.chosenDate
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     deleteAllExpense: () => dispatch(deleteAllExpense())
   };
 };
 
-export default connect(null, mapDispatchToProps)(SideDrawer);
+export default connect(mapStateToProps, mapDispatchToProps)(SideDrawer);

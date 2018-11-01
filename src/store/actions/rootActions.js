@@ -1,4 +1,4 @@
-import {ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE, DELETE_ALL_EXPENSE, REPORT_DATA} from './actionTypes';
+import {ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE, DELETE_ALL_EXPENSE} from './actionTypes';
 
 export const addExpense = (data) => {
   return {
@@ -29,11 +29,5 @@ export const changeDate = (date) => {
 export const deleteAllExpense = () => {
   return {
     type: DELETE_ALL_EXPENSE
-  }
-};
-
-export const reportData = () => {
-  return {
-    type: REPORT_DATA
   }
 };

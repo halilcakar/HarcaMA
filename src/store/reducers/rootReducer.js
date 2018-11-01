@@ -1,22 +1,22 @@
-import { ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE, DELETE_ALL_EXPENSE, REPORT_DATA } from '../actions/actionTypes';
+import { ADD_EXPENSE, CHANGE_DATE, DELETE_EXPENSE, UPDATE_EXPENSE, DELETE_ALL_EXPENSE } from '../actions/actionTypes';
 import { AsyncStorage } from 'react-native';
 import uuidv4 from 'uuid/v4';
 
 let harcama = {};
+const expenseTypes = [
+  {"label":"Ev Giderleri(Kira, boya vs.)","value":"evGider"},
+  {"label":"Yemek","value":"yemek"},
+  {"label":"Sağlık","value":"saglik"},
+  {"label":"Kozmetik","value":"kozmetik"},
+  {"label":"Elektronik","value":"elektronik"},
+  {"label":"Kıyafet","value":"kiyafet"},
+  {"label":"Okul","value":"okul"}
+];
 const initialState = {
   chosenDate: new Date(),
   dailyExpense: [],
   todayExpense: 0,
   totalMonthExpense: 0,
-  expenseTypes: [
-    { label: 'Ev Giderleri(Kira, boya vs.)', value: 'evGider' },
-    { label: 'Yemek', value: 'yemek' },
-    { label: 'Sağlık', value: 'saglik' },
-    { label: 'Kozmetik', value: 'kozmetik' },
-    { label: 'Elektronik', value: 'elektronik' },
-    { label: 'Kıyafet', value: 'kiyafet' },
-    { label: 'Okul', value: 'okul' },
-  ]
 };
 const getDateString = date => {
   return { prefix: date.getFullYear()+'-'+(date.getMonth()+1), day: date.getDate() };
@@ -34,6 +34,7 @@ const checkPrefixDay = (prefix, day) => {
     harcama[prefix]['days'][day] = [];
   }
 };
+
 const setItem = async () => {
   try {
     await AsyncStorage.setItem('HarcaMA', JSON.stringify(harcama));
@@ -42,25 +43,14 @@ const setItem = async () => {
     console.log(e);
   }
 };
-
 const getItems = async () => {
   try {
     harcama = await AsyncStorage.getItem('HarcaMA');
-    if(harcama == null) { harcama = '{"expenseTypes":[{"label":"Ev Giderleri(Kira, boya vs.)","value":"evGider"},{"label":"Yemek","value":"yemek"},{"label":"Sağlık","value":"saglik"},{"label":"Kozmetik","value":"kozmetik"},{"label":"Elektronik","value":"elektronik"},{"label":"Kıyafet","value":"kiyafet"},{"label":"Okul","value":"okul"}]}'; }
+    if(harcama == null) { harcama = '{}'; }
     harcama = JSON.parse(harcama);
   }
   catch (e) {
-    harcama = {
-      expenseTypes: [
-        { label: 'Ev Giderleri(Kira, boya vs.)', value: 'evGider' },
-        { label: 'Yemek', value: 'yemek' },
-        { label: 'Sağlık', value: 'saglik' },
-        { label: 'Kozmetik', value: 'kozmetik' },
-        { label: 'Elektronik', value: 'elektronik' },
-        { label: 'Kıyafet', value: 'kiyafet' },
-        { label: 'Okul', value: 'okul' },
-      ]
-    };
+    harcama = {};
   }
 };
 getItems();
@@ -78,10 +68,10 @@ const reducer = (state = initialState, action) => {
       harcama[prefix]['days'][day].forEach(item =>todayExpense += item.total);
       setItem();
       return {
-        ...state,
         dailyExpense: [].concat(harcama[prefix]['days'][day]),
         totalMonthExpense,
-        todayExpense
+        todayExpense,
+        chosenDate: state.chosenDate
       };
     case DELETE_EXPENSE:
       let dd = getDateString(state.chosenDate);
@@ -93,7 +83,7 @@ const reducer = (state = initialState, action) => {
       harcama[dd.prefix]['days'][dd.day].forEach(item =>todayExpense += item.total);
       setItem();
       return {
-        ...state,
+        chosenDate: state.chosenDate,
         dailyExpense: [].concat(harcama[dd.prefix]['days'][dd.day]),
         totalMonthExpense,
         todayExpense
@@ -114,7 +104,7 @@ const reducer = (state = initialState, action) => {
       harcama[ud.prefix]['days'][ud.day].forEach(item =>todayExpense += item.total);
       setItem();
       return {
-        ...state,
+        chosenDate: state.chosenDate,
         dailyExpense: [].concat(harcama[ud.prefix]['days'][ud.day]),
         totalMonthExpense,
         todayExpense
@@ -136,16 +126,11 @@ const reducer = (state = initialState, action) => {
       todayExpense = 0;
       harcama[obj.prefix]['days'][obj.day].forEach(item => { todayExpense += item.total; });
       return {
-        ...state,
+        chosenDate,
         dailyExpense: [].concat(harcama[obj.prefix]['days'][obj.day]),
         totalMonthExpense,
-        todayExpense,
-        chosenDate
+        todayExpense
       };
-    case REPORT_DATA:
-    return {
-      ...harcama
-    };
     default:
       return state;
   }

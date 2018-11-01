@@ -11,35 +11,31 @@ import MonthReport from "./src/components/report/MonthReport";
 
 const store = configureStore();
 
-Navigation.registerComponent('Async-Storage.App', () => App, store, Provider);
-Navigation.registerComponent('Async-Storage.AddExpense', () => AddExpense);
-Navigation.registerComponent('Async-Storage.EditExpense', () => EditExpense);
+Navigation.registerComponent('HarcaMA.App', () => App, store, Provider);
+Navigation.registerComponent('HarcaMA.AddExpense', () => AddExpense);
+Navigation.registerComponent('HarcaMA.EditExpense', () => EditExpense);
 
-Navigation.registerComponent('Async-Storage.SideDrawer', () => SideDrawer, store, Provider);
+Navigation.registerComponent('HarcaMA.SideDrawer', () => SideDrawer, store, Provider);
 
-Navigation.registerComponent('Async-Storage.MonthReport', () => MonthReport, store, Provider);
+Navigation.registerComponent('HarcaMA.MonthReport', () => MonthReport, store, Provider);
+Navigation.registerComponent('HarcaMA.YearReport', () => YearReport, store, Provider);
+
 
 Navigation.startSingleScreenApp({
   screen: {
-    screen: 'Async-Storage.MonthReport'
+    screen: 'HarcaMA.App',
+    navigatorStyle: {
+      navBarHidden: true,
+      statusBarColor: config.statusBarColor
+    }
+  },
+  drawer: {
+    left: {
+      screen: 'HarcaMA.SideDrawer',
+      disableOpenGesture: true,
+      fixedWidth: '75%'
+    },
+    animationType: 'slide-down'
   }
 });
-
-// Navigation.startSingleScreenApp({
-//   screen: {
-//     screen: 'Async-Storage.App',
-//     navigatorStyle: {
-//       navBarHidden: true,
-//       statusBarColor: config.statusBarColor
-//     }
-//   },
-//   drawer: {
-//     left: {
-//       screen: 'Async-Storage.SideDrawer',
-//       disableOpenGesture: true,
-//       fixedWidth: '75%'
-//     },
-//     animationType: 'slide-down'
-//   }
-// });
 
