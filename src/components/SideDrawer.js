@@ -43,7 +43,6 @@ class SideDrawer extends Component {
       </Button>);
     });
   }
-
   onMonthReportPress() {
     this.props.navigator.toggleDrawer();
     this.props.navigator.push({
@@ -60,6 +59,20 @@ class SideDrawer extends Component {
       }
     });
   }
+  isChosenDateSetted() {
+    let chosenDate, date = new Date();
+    if(this.props.chosenDate) {
+      if(date.getFullYear() !== this.props.chosenDate.getFullYear() || date.getMonth() !== this.props.chosenDate.getMonth() || date.getDate() !== this.props.chosenDate.getDate()) {
+        chosenDate = this.props.chosenDate;
+        chosenDate = `${chosenDate.getDate()}/${chosenDate.getMonth()+1}/${chosenDate.getFullYear()}`;
+        return (
+          <Button full disabled bordered style={styles.disabledButtonStyle}>
+            <Text uppercase={false} style={styles.innerText}>Seçili Tarih: { chosenDate }</Text>
+          </Button>
+        );
+      }
+    }
+  }
 
   render() {
     let date = new Date();
@@ -72,8 +85,11 @@ class SideDrawer extends Component {
         </Header>
         <Content padder style={styles.topContent}>
           <Button full disabled bordered style={styles.disabledButtonStyle}>
-            <Text style={styles.innerText}>Bugün: { date }</Text>
+            <Text uppercase={false} style={styles.innerText}>Bugün: { date }</Text>
           </Button>
+
+          { this.isChosenDateSetted() }
+
           <Button onPress={this.onMonthReportPress} full style={styles.mt10}>
             <Text>Ay Raporu</Text>
           </Button>
