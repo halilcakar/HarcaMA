@@ -8,6 +8,7 @@ import SideDrawer from './src/components/SideDrawer';
 import configureStore from './src/store/configureStore';
 import config from './src/config';
 import MonthReport from "./src/components/report/MonthReport";
+import YearReport from "./src/components/report/YearReport";
 
 const store = configureStore();
 
@@ -17,9 +18,8 @@ Navigation.registerComponent('HarcaMA.EditExpense', () => EditExpense);
 
 Navigation.registerComponent('HarcaMA.SideDrawer', () => SideDrawer, store, Provider);
 
-Navigation.registerComponent('HarcaMA.MonthReport', () => MonthReport, store, Provider);
-Navigation.registerComponent('HarcaMA.YearReport', () => YearReport, store, Provider);
-
+Navigation.registerComponent('HarcaMA.MonthReport', () => MonthReport);
+Navigation.registerComponent('HarcaMA.YearReport', () => YearReport);
 
 Navigation.startSingleScreenApp({
   screen: {

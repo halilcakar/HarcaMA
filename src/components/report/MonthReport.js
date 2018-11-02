@@ -11,7 +11,9 @@ let dateString = `${date.getFullYear()}-${date.getMonth() + 1}`;
 let thisMonth;
 let allExpense = [], globData = {};
 let harcama = {};
+
 class MonthReport extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +26,9 @@ class MonthReport extends Component {
     const getItems = async () => {
       try {
         harcama = await AsyncStorage.getItem('HarcaMA');
-        if(harcama == null) { harcama = '{}'; }
+        if (harcama == null) {
+          harcama = '{}';
+        }
         harcama = JSON.parse(harcama);
         setTimeout(() => {
           console.log('setTimeOut');
@@ -41,31 +45,37 @@ class MonthReport extends Component {
       }
     };
     getItems();
+    date = new Date();
+    dateString = `${date.getFullYear()}-${date.getMonth() + 1}`;
+    thisMonth = undefined;
+    allExpense = [];
+    globData = {};
+    harcama = {};
   }
 
   getListItems() {
     let jsx = [];
     let sortable = [];
-    for(let key in globData) {
-      if(globData.hasOwnProperty(key))
+    for (let key in globData) {
+      if (globData.hasOwnProperty(key))
         sortable.push([globData[key], globData[key].total]);
     }
     sortable.sort((a, b) => b[1] - a[1]);
     for (let i = 0; i < sortable.length; i++) {
       const key = sortable[i][0];
-      if(key.total !== 0) {
+      if (key.total !== 0) {
         jsx.push(
-          <ListItem style={{ justifyContent: 'center' }}>
-            <Left style={styles.flex2}><Text> { key.name } </Text></Left>
-            <Body style={styles.flex1}><Text> { key.total } TL</Text></Body>
-            <Right style={styles.flex1}><Text> { key.yuzde }%</Text></Right>
+          <ListItem>
+            <Left style={styles.flex2}><Text> {key.name} </Text></Left>
+            <Body style={styles.flex1}><Text> {key.total} TL</Text></Body>
+            <Right style={styles.flex1}><Text> {key.yuzde}%</Text></Right>
           </ListItem>
         );
       }
       else {
         jsx.push(
-          <ListItem style={{ justifyContent: 'space-between' }}>
-            <Left style={styles.flex2}><Text> { key.name } </Text></Left>
+          <ListItem>
+            <Left style={styles.flex2}><Text> {key.name} </Text></Left>
             <Body style={styles.flex1}><Text>0 TL</Text></Body>
             <Right style={styles.flex1}/>
           </ListItem>
@@ -76,15 +86,15 @@ class MonthReport extends Component {
   }
 
   render() {
-    if(this.state.isLoading) {
+    if (this.state.isLoading) {
       return (
-        <Spinner />
+        <Spinner/>
       );
     }
     else {
-      let prefix = `${this.props.chosenDate.getFullYear()}-${this.props.chosenDate.getMonth()+1}`;
-      if(harcama[prefix] !== undefined) {
-        if(harcama[prefix].totalMonthExpense === 0) {
+      let prefix = `${this.props.chosenDate.getFullYear()}-${this.props.chosenDate.getMonth() + 1}`;
+      if (harcama[prefix] !== undefined) {
+        if (harcama[prefix].totalMonthExpense === 0) {
           return (
             <Container>
               <Content padder>
@@ -97,20 +107,23 @@ class MonthReport extends Component {
         }
         else {
           const expenseTypes = [
-            {"label":"Ev Giderleri(Kira, boya vs.)","value":"evGider"},
-            {"label":"Yemek","value":"yemek"},
-            {"label":"Sağlık","value":"saglik"},
-            {"label":"Kozmetik","value":"kozmetik"},
-            {"label":"Elektronik","value":"elektronik"},
-            {"label":"Kıyafet","value":"kiyafet"},
-            {"label":"Okul","value":"okul"}
+            { 'label': 'Ev Giderleri(Kira, boya vs.)', 'value': 'evGider' },
+            { 'label': 'Yemek', 'value': 'yemek' },
+            { 'label': 'Sağlık', 'value': 'saglik' },
+            { 'label': 'Kozmetik', 'value': 'kozmetik' },
+            { 'label': 'Elektronik', 'value': 'elektronik' },
+            { 'label': 'Kıyafet', 'value': 'kiyafet' },
+            { 'label': 'Okul', 'value': 'okul' }
           ];
           for (let i = 0; i < expenseTypes.length; i++) {
             const expenseType = expenseTypes[i];
-            globData[expenseType.value] = { name: _.truncate(expenseType.label, { omission: '', length: 12 }), total: 0 };
+            globData[expenseType.value] = {
+              name: _.truncate(expenseType.label, { omission: '', length: 12 }),
+              total: 0
+            };
           }
-          if(harcama[prefix].days) {
-            for(let key in harcama[prefix].days) {
+          if (harcama[prefix].days) {
+            for (let key in harcama[prefix].days) {
               if (harcama[prefix].days.hasOwnProperty(key)) {
                 allExpense = [...allExpense, ...harcama[prefix].days[key]];
               }
@@ -118,15 +131,22 @@ class MonthReport extends Component {
           }
           for (let i = 0; i < allExpense.length; i++) {
             let expense = allExpense[i];
-            globData[expense.alisverisTipi].total += parseInt(expense.fiyat);
+            globData[expense.alisverisTipi].total += parseInt(expense.total);
             globData[expense.alisverisTipi].yuzde = (globData[expense.alisverisTipi].total * 100 / harcama[prefix].totalMonthExpense).toFixed(2);
           }
 
           return (
             <Container>
               <Content padder>
-                <List>
-                  { this.getListItems() }
+                <List style={styles.listStyle}>
+                  {this.getListItems()}
+                </List>
+                <List style={styles.listStyle}>
+                  <ListItem>
+                    <Left style={styles.flex2}><Text>Genel Toplam</Text></Left>
+                    <Body style={styles.flex1}/>
+                    <Right style={styles.flex1}><Text>{harcama[prefix].totalMonthExpense} TL</Text></Right>
+                  </ListItem>
                 </List>
               </Content>
             </Container>
@@ -154,6 +174,7 @@ class MonthReport extends Component {
 const styles = StyleSheet.create({
   flex2: { flex: 2 },
   flex1: { flex: 1 },
+  listStyle: { borderBottomWidth: 2 },
   harcamaYokHatali: { justifyContent: 'center', alignItems: 'center' }
 });
 

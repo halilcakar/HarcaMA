@@ -12,6 +12,7 @@ class SideDrawer extends Component {
   constructor(props) {
     super(props);
     this.onDeleteAllPress = this.onDeleteAllPress.bind(this);
+    this.onYearReportPress = this.onYearReportPress.bind(this);
     this.onMonthReportPress = this.onMonthReportPress.bind(this);
   }
   onDeleteAllPress() {
@@ -44,10 +45,27 @@ class SideDrawer extends Component {
     });
   }
   onMonthReportPress() {
+    const aylar = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
     this.props.navigator.toggleDrawer();
     this.props.navigator.push({
       screen: 'HarcaMA.MonthReport',
-      title: 'Aylık Rapor',
+      title: `${this.props.chosenDate.getFullYear()} - ${aylar[this.props.chosenDate.getMonth()]} Harcamalar`,
+      navigatorStyle: {
+        navBarBackgroundColor: '#1DAA80',
+        navBarTextColor: 'white',
+        navBarButtonColor: 'white',
+        statusBarColor: '#167F60'
+      },
+      passProps: {
+        chosenDate: this.props.chosenDate
+      }
+    });
+  }
+  onYearReportPress() {
+    this.props.navigator.toggleDrawer();
+    this.props.navigator.push({
+      screen: 'HarcaMA.YearReport',
+      title: `${this.props.chosenDate.getFullYear()} Yılı Harcamaları`,
       navigatorStyle: {
         navBarBackgroundColor: '#1DAA80',
         navBarTextColor: 'white',
@@ -93,7 +111,7 @@ class SideDrawer extends Component {
           <Button onPress={this.onMonthReportPress} full style={styles.mt10}>
             <Text>Ay Raporu</Text>
           </Button>
-          <Button full style={styles.mt10}>
+          <Button onPress={this.onYearReportPress} full style={styles.mt10}>
             <Text>Yıl Raporu</Text>
           </Button>
           <Button onPress={this.onDeleteAllPress} full style={styles.mt10} danger>
