@@ -10,7 +10,7 @@ class AddExpense extends Component {
     this.state = {
       baslik: '',
       aciklama: '',
-      adet: '',
+      adet: '1',
       fiyat: '',
       alisverisTipi: 'evGider'
     };

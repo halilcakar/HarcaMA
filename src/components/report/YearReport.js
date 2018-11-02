@@ -11,6 +11,10 @@ let dateString = `${date.getFullYear()}-${date.getMonth() + 1}`;
 let thisMonth;
 let allExpense = [], globData = {};
 let harcama = {};
+const aylar = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'].map((item, index) => {
+  return [item, index];
+});
+
 class YearReport extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +23,6 @@ class YearReport extends Component {
     };
     this.getListItems = this.getListItems.bind(this);
   }
-
   componentDidMount() {
     const getItems = async () => {
       try {
@@ -47,42 +50,32 @@ class YearReport extends Component {
     allExpense = []; globData = {};
     harcama = {};
   }
-
-  getListItems() {
+  getListItems(yearTotal) {
+    let yearSelected = this.props.chosenDate.getFullYear();
     let jsx = [];
-    let sortable = [];
-    for(let key in globData) {
-      if(globData.hasOwnProperty(key))
-        sortable.push([globData[key], globData[key].total]);
-    }
-    for (let i = 0; i < sortable.length; i++) {
-      const key = sortable[i][0];
-      if(key.total !== 0) {
+    for (let i = 0; i < aylar.length; i++) {
+      const ay = aylar[i];
+      if(harcama[`${yearSelected}-${ay[1]}`]) {
         jsx.push(
           <ListItem>
-            <Left style={styles.flex2}><Text> { key.name } </Text></Left>
-            <Body style={styles.flex1}><Text> { key.total } TL</Text></Body>
-            <Right style={styles.flex1}><Text> { key.yuzde }%</Text></Right>
+            <Left style={styles.flex2}><Text style={styles.innerText}> { ay[0] } </Text></Left>
+            <Body style={styles.flex1}><Text style={styles.innerText}> { harcama[`${yearSelected}-${ay[1]}`].totalMonthExpense } TL</Text></Body>
+            <Right style={styles.flex1}><Text style={styles.innerText}> { harcama[`${yearSelected}-${ay[1]}`].totalMonthExpense * 100 / yearTotal }%</Text></Right>
           </ListItem>
         );
       }
       else {
-        jsx.push(
-          <ListItem>
-            <Left style={styles.flex2}><Text> { key.name } </Text></Left>
-            <Body style={styles.flex1}><Text>0 TL</Text></Body>
-            <Right style={styles.flex1}/>
-          </ListItem>
-        )
+        jsx.push(<ListItem>
+          <Left style={styles.flex2}><Text style={styles.innerText}> { ay[0] } </Text></Left>
+          <Body style={styles.flex1}><Text style={styles.innerText}>0 TL</Text></Body>
+          <Right style={styles.flex1}/>
+        </ListItem>);
       }
     }
     return jsx;
   }
 
   render() {
-    const aylar = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'].map((item, index) => {
-      return [item, index];
-    });
     if(this.state.isLoading) {
       return (
         <Spinner />
@@ -109,54 +102,23 @@ class YearReport extends Component {
           );
         }
         else {
-
           return (
             <Container>
               <Content padder>
-                <List>
-
+                <List style={styles.listStyle}>
+                  { this.getListItems(yearTotal) }
+                </List>
+                <List style={styles.listStyle}>
+                  <ListItem>
+                    <Left style={styles.flex2}><Text style={styles.innerText}>Genel Toplam</Text></Left>
+                    <Body style={styles.flex1}/>
+                    <Right style={styles.flex1}><Text style={styles.innerText}>{yearTotal} TL</Text></Right>
+                  </ListItem>
                 </List>
               </Content>
             </Container>
           );
         }
-        // else {
-        //   const expenseTypes = [
-        //     {"label":"Ev Giderleri(Kira, boya vs.)","value":"evGider"},
-        //     {"label":"Yemek","value":"yemek"},
-        //     {"label":"Sağlık","value":"saglik"},
-        //     {"label":"Kozmetik","value":"kozmetik"},
-        //     {"label":"Elektronik","value":"elektronik"},
-        //     {"label":"Kıyafet","value":"kiyafet"},
-        //     {"label":"Okul","value":"okul"}
-        //   ];
-        //   for (let i = 0; i < expenseTypes.length; i++) {
-        //     const expenseType = expenseTypes[i];
-        //     globData[expenseType.value] = { name: _.truncate(expenseType.label, { omission: '', length: 12 }), total: 0 };
-        //   }
-        //   if(harcama[prefix].days) {
-        //     for(let key in harcama[prefix].days) {
-        //       if (harcama[prefix].days.hasOwnProperty(key)) {
-        //         allExpense = [...allExpense, ...harcama[prefix].days[key]];
-        //       }
-        //     }
-        //   }
-        //   for (let i = 0; i < allExpense.length; i++) {
-        //     let expense = allExpense[i];
-        //     globData[expense.alisverisTipi].total += parseInt(expense.fiyat);
-        //     globData[expense.alisverisTipi].yuzde = (globData[expense.alisverisTipi].total * 100 / harcama[prefix].totalMonthExpense).toFixed(2);
-        //   }
-        //
-        //   return (
-        //     <Container>
-        //       <Content padder>
-        //         <List>
-        //           { this.getListItems() }
-        //         </List>
-        //       </Content>
-        //     </Container>
-        //   );
-        // }
       }
       else {
         return (
@@ -179,6 +141,8 @@ class YearReport extends Component {
 const styles = StyleSheet.create({
   flex2: { flex: 2 },
   flex1: { flex: 1 },
+  innerText: { color: '#767676' },
+  listStyle: { borderBottomWidth: 1, borderColor: '#686868' },
   harcamaYokHatali: { justifyContent: 'center', alignItems: 'center' }
 });
 

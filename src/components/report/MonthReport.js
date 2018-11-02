@@ -66,17 +66,17 @@ class MonthReport extends Component {
       if (key.total !== 0) {
         jsx.push(
           <ListItem>
-            <Left style={styles.flex2}><Text> {key.name} </Text></Left>
-            <Body style={styles.flex1}><Text> {key.total} TL</Text></Body>
-            <Right style={styles.flex1}><Text> {key.yuzde}%</Text></Right>
+            <Left style={styles.flex2}><Text style={styles.innerText}> {key.name} </Text></Left>
+            <Body style={styles.flex1}><Text style={styles.innerText}> {key.total} TL</Text></Body>
+            <Right style={styles.flex1}><Text style={styles.innerText}> {key.yuzde}%</Text></Right>
           </ListItem>
         );
       }
       else {
         jsx.push(
           <ListItem>
-            <Left style={styles.flex2}><Text> {key.name} </Text></Left>
-            <Body style={styles.flex1}><Text>0 TL</Text></Body>
+            <Left style={styles.flex2}><Text style={styles.innerText}> {key.name} </Text></Left>
+            <Body style={styles.flex1}><Text style={styles.innerText}>0 TL</Text></Body>
             <Right style={styles.flex1}/>
           </ListItem>
         )
@@ -143,9 +143,9 @@ class MonthReport extends Component {
                 </List>
                 <List style={styles.listStyle}>
                   <ListItem>
-                    <Left style={styles.flex2}><Text>Genel Toplam</Text></Left>
+                    <Left style={styles.flex2}><Text style={styles.innerText}>Genel Toplam</Text></Left>
                     <Body style={styles.flex1}/>
-                    <Right style={styles.flex1}><Text>{harcama[prefix].totalMonthExpense} TL</Text></Right>
+                    <Right style={styles.flex1}><Text style={styles.innerText}>{harcama[prefix].totalMonthExpense} TL</Text></Right>
                   </ListItem>
                 </List>
               </Content>
@@ -174,7 +174,8 @@ class MonthReport extends Component {
 const styles = StyleSheet.create({
   flex2: { flex: 2 },
   flex1: { flex: 1 },
-  listStyle: { borderBottomWidth: 2 },
+  innerText: { color: '#767676' },
+  listStyle: { borderBottomWidth: 1, borderColor: '#686868' },
   harcamaYokHatali: { justifyContent: 'center', alignItems: 'center' }
 });
 
