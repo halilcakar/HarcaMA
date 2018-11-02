@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
-import { AsyncStorage, Dimensions, StyleSheet } from 'react-native';
+import { AsyncStorage, Dimensions, StyleSheet, Image, View } from 'react-native';
 import { Container, Content, List, ListItem, Text, Left, Body, Right } from 'native-base';
 import { reportData } from '../../store/actions';
 import Spinner from '../Spinner';
+
+import harcamaYok from '../../assets/harcama-yok.png';
 
 const screenWidth = Dimensions.get('window').width;
 let date = new Date();
@@ -30,12 +31,11 @@ class YearReport extends Component {
         if(harcama == null) { harcama = '{}'; }
         harcama = JSON.parse(harcama);
         setTimeout(() => {
-          console.log('setTimeOut');
           this.setState({
             isLoading: false,
             ...harcama
           });
-        }, 3000)
+        }, 2000);
       }
       catch (e) {
         harcama = {
@@ -92,13 +92,9 @@ class YearReport extends Component {
         }
         if(yearTotal === 0) {
           return (
-            <Container>
-              <Content padder>
-                <Text>
-                  HarcaMA YOH!
-                </Text>
-              </Content>
-            </Container>
+              <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: 'center' }}>
+                <Image resizeMode={'center'} source={harcamaYok} style={{ width: '100%', height: '100%', opacity: .5 }}/>
+              </View>
           );
         }
         else {
@@ -124,12 +120,7 @@ class YearReport extends Component {
         return (
           <Container style={styles.harcamaYokHatali}>
             <Content padder>
-              <Text>
-                Bu yıla ait HarcaMA YOH Galiba Bilemedik!!
-              </Text>
-              <Text>
-                Tekrar mı denesen?
-              </Text>
+              <Image source={harcamaYok}/>
             </Content>
           </Container>
         );
