@@ -57,15 +57,15 @@ class YearReport extends Component {
       const ay = aylar[i];
       if(harcama[`${yearSelected}-${ay[1]}`]) {
         jsx.push(
-          <ListItem>
+          <ListItem style={{ justifyContent: 'center' }}>
             <Left style={styles.flex2}><Text style={styles.innerText}> { ay[0] } </Text></Left>
             <Body style={styles.flex1}><Text style={styles.innerText}> { harcama[`${yearSelected}-${ay[1]}`].totalMonthExpense } TL</Text></Body>
-            <Right style={styles.flex1}><Text style={styles.innerText}> { harcama[`${yearSelected}-${ay[1]}`].totalMonthExpense * 100 / yearTotal }%</Text></Right>
+            <Right style={styles.flex1}><Text style={styles.innerText}> { (harcama[`${yearSelected}-${ay[1]}`].totalMonthExpense * 100 / yearTotal).toFixed(2) }%</Text></Right>
           </ListItem>
         );
       }
       else {
-        jsx.push(<ListItem>
+        jsx.push(<ListItem style={{ justifyContent: 'center' }}>
           <Left style={styles.flex2}><Text style={styles.innerText}> { ay[0] } </Text></Left>
           <Body style={styles.flex1}><Text style={styles.innerText}>0 TL</Text></Body>
           <Right style={styles.flex1}/>
@@ -73,6 +73,20 @@ class YearReport extends Component {
       }
     }
     return jsx;
+  }
+
+  getHarcamaYok() {
+    return (
+      <View style={styles.harcamaYokContainer}>
+        <Image resizeMode={'center'} source={harcamaYok} style={{ width: '60%', height: '40%', opacity: .5,}}/>
+        <Text style={styles.subText}>
+          Harcaman Yok!
+        </Text>
+        <Text style={styles.subText1}>
+          Tüm yıl hiç bişey harcamadın mı?
+        </Text>
+      </View>
+    );
   }
 
   render() {
@@ -91,11 +105,7 @@ class YearReport extends Component {
           }
         }
         if(yearTotal === 0) {
-          return (
-              <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: 'center' }}>
-                <Image resizeMode={'center'} source={harcamaYok} style={{ width: '100%', height: '100%', opacity: .5 }}/>
-              </View>
-          );
+          return this.getHarcamaYok();
         }
         else {
           return (
@@ -117,13 +127,7 @@ class YearReport extends Component {
         }
       }
       else {
-        return (
-          <Container style={styles.harcamaYokHatali}>
-            <Content padder>
-              <Image source={harcamaYok}/>
-            </Content>
-          </Container>
-        );
+        return this.getHarcamaYok();
       }
     }
   }
@@ -132,9 +136,13 @@ class YearReport extends Component {
 const styles = StyleSheet.create({
   flex2: { flex: 2 },
   flex1: { flex: 1 },
-  innerText: { color: '#767676' },
+  innerText: { color: '#767676', alignSelf: 'center' },
   listStyle: { borderBottomWidth: 1, borderColor: '#686868' },
-  harcamaYokHatali: { justifyContent: 'center', alignItems: 'center' }
+  subText: { fontSize: 25, color: '#767676' },
+  subText1: { marginTop: 10, color: '#767676', },
+  harcamaYokHatali: { justifyContent: 'center', alignItems: 'center' },
+  harcamaYokContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+
 });
 
 export default YearReport;

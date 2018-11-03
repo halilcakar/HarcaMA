@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { AsyncStorage, Dimensions, StyleSheet } from 'react-native';
+import { AsyncStorage, Dimensions, Image, StyleSheet, View } from 'react-native';
 import { Container, Content, List, ListItem, Text, Left, Body, Right } from 'native-base';
 import { reportData } from '../../store/actions';
 import Spinner from '../Spinner';
+import harcamaYok from '../../assets/harcama-yok.png';
 
 const screenWidth = Dimensions.get('window').width;
 let date = new Date();
@@ -85,6 +86,20 @@ class MonthReport extends Component {
     return jsx;
   }
 
+  getHarcamaYok() {
+    return (
+      <View style={styles.harcamaYokContainer}>
+        <Image resizeMode={'center'} source={harcamaYok} style={{ width: '60%', height: '40%', opacity: .5,}}/>
+        <Text style={styles.subText}>
+          Harcaman Yok!
+        </Text>
+        <Text style={styles.subText1}>
+          Tüm ay hiç bişey harcamadın mı?
+        </Text>
+      </View>
+    );
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -95,15 +110,7 @@ class MonthReport extends Component {
       let prefix = `${this.props.chosenDate.getFullYear()}-${this.props.chosenDate.getMonth() + 1}`;
       if (harcama[prefix] !== undefined) {
         if (harcama[prefix].totalMonthExpense === 0) {
-          return (
-            <Container>
-              <Content padder>
-                <Text>
-                  HarcaMA YOH!
-                </Text>
-              </Content>
-            </Container>
-          );
+          return this.getHarcamaYok();
         }
         else {
           const expenseTypes = [
@@ -154,18 +161,7 @@ class MonthReport extends Component {
         }
       }
       else {
-        return (
-          <Container style={styles.harcamaYokHatali}>
-            <Content padder>
-              <Text>
-                HarcaMA YOH Galiba Bilemedik!!
-              </Text>
-              <Text>
-                Tekrar mı denesen?
-              </Text>
-            </Content>
-          </Container>
-        );
+        return this.getHarcamaYok();
       }
     }
   }
@@ -174,9 +170,12 @@ class MonthReport extends Component {
 const styles = StyleSheet.create({
   flex2: { flex: 2 },
   flex1: { flex: 1 },
-  innerText: { color: '#767676' },
+  innerText: { color: '#767676', alignSelf: 'center' },
   listStyle: { borderBottomWidth: 1, borderColor: '#686868' },
-  harcamaYokHatali: { justifyContent: 'center', alignItems: 'center' }
+  subText: { fontSize: 25, color: '#767676' },
+  subText1: { marginTop: 10, color: '#767676', },
+  harcamaYokHatali: { justifyContent: 'center', alignItems: 'center' },
+  harcamaYokContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 });
 
 export default MonthReport;
