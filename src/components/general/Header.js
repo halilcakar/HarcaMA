@@ -17,19 +17,6 @@ class HeaderComp extends Component {
           </TouchableOpacity>
         </Left>
         <Body style={[styles.container, styles.flex2]}>
-          {/*<DatePicker
-            chosenDate={this.props.chosenDate}
-            defaultDate={this.props.chosenDate}
-            maximumDate={(new Date().setDate(new Date().getDate() + 1))}
-            locale={'tr'}
-            format="DD-MM-YYYY"
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={true}
-            animationType={'fade'}
-            androidMode={'default'}
-            textStyle={styles.datePickerTextStyle}
-            onDateChange={this.props.setDate}
-          />*/}
           <DatePicker
             date={this.props.chosenDate}
             mode="date"
@@ -42,7 +29,7 @@ class HeaderComp extends Component {
                 borderWidth: 0
               },
               dateText: {
-                fontSize: 25,
+                fontSize: 22,
                 color: 'white',
                 fontWeight: 'bold'
               }
