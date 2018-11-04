@@ -19,7 +19,7 @@ const initialState = {
   totalMonthExpense: 0,
 };
 const getDateString = date => {
-  return { prefix: date.getFullYear()+'-'+(date.getMonth()+1), day: date.getDate() };
+  return { prefix: date.getFullYear()+'-'+(date.getMonth()), day: date.getDate() };
 };
 const checkPrefixDay = (prefix, day) => {
   if (harcama[prefix] === undefined) {
@@ -37,6 +37,7 @@ const checkPrefixDay = (prefix, day) => {
 
 const setItem = async () => {
   try {
+    console.log(harcama);
     await AsyncStorage.setItem('HarcaMA', JSON.stringify(harcama));
   }
   catch (e) {

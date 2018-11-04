@@ -11,7 +11,6 @@ class EditExpense extends Component {
       ...props.state
     };
   }
-
   onValueChange(value: string) {
     this.setState({
       alisverisTipi: value
@@ -52,7 +51,8 @@ class EditExpense extends Component {
       {"label":"Kozmetik","value":"kozmetik"},
       {"label":"Elektronik","value":"elektronik"},
       {"label":"Kıyafet","value":"kiyafet"},
-      {"label":"Okul","value":"okul"}
+      {"label":"Okul","value":"okul"},
+      {"label":"Ulaşım","value":"ulasim"}
     ];
     return (
       expenseTypes.map(({label, value}, key) => {

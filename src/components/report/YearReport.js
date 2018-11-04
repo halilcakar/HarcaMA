@@ -45,7 +45,7 @@ class YearReport extends Component {
     };
     getItems();
     date = new Date();
-    dateString = `${date.getFullYear()}-${date.getMonth() + 1}`;
+    dateString = `${date.getFullYear()}-${date.getMonth()}`;
     thisMonth = undefined;
     allExpense = []; globData = {};
     harcama = {};

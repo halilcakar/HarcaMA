@@ -51,13 +51,14 @@ class AddExpense extends Component {
   }
   pickItemHandler() {
     const expenseTypes = [
-      {"label":"Ev Giderleri(Kira, boya vs.)","value":"evGider"},
-      {"label":"Yemek","value":"yemek"},
-      {"label":"Sağlık","value":"saglik"},
-      {"label":"Kozmetik","value":"kozmetik"},
-      {"label":"Elektronik","value":"elektronik"},
-      {"label":"Kıyafet","value":"kiyafet"},
-      {"label":"Okul","value":"okul"}
+      {'label':'Ev Giderleri(Kira, boya vs.)','value':'evGider'},
+      {'label':'Yemek','value':'yemek'},
+      {'label':'Sağlık','value':'saglik'},
+      {'label':'Kozmetik','value':'kozmetik'},
+      {'label':'Elektronik','value':'elektronik'},
+      {'label':'Kıyafet','value':'kiyafet'},
+      {'label':'Okul','value':'okul'},
+      {'label':'Ulaşım','value':'ulasim'}
     ];
     return (
       expenseTypes.map(({label, value}, key) => {

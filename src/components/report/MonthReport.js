@@ -107,7 +107,9 @@ class MonthReport extends Component {
       );
     }
     else {
-      let prefix = `${this.props.chosenDate.getFullYear()}-${this.props.chosenDate.getMonth() + 1}`;
+      let prefix = `${this.props.chosenDate.getFullYear()}-${this.props.chosenDate.getMonth()}`;
+      console.log(prefix);
+      console.log(harcama[prefix]);
       if (harcama[prefix] !== undefined) {
         if (harcama[prefix].totalMonthExpense === 0) {
           return this.getHarcamaYok();
@@ -120,7 +122,8 @@ class MonthReport extends Component {
             { 'label': 'Kozmetik', 'value': 'kozmetik' },
             { 'label': 'Elektronik', 'value': 'elektronik' },
             { 'label': 'Kıyafet', 'value': 'kiyafet' },
-            { 'label': 'Okul', 'value': 'okul' }
+            { 'label': 'Okul', 'value': 'okul' },
+            { 'label': 'Ulaşım', 'value': 'ulasim' }
           ];
           for (let i = 0; i < expenseTypes.length; i++) {
             const expenseType = expenseTypes[i];
@@ -136,12 +139,18 @@ class MonthReport extends Component {
               }
             }
           }
+          console.log(allExpense);
+          console.log(allExpense.length);
           for (let i = 0; i < allExpense.length; i++) {
-            let expense = allExpense[i];
-            globData[expense.alisverisTipi].total += parseInt(expense.total);
-            globData[expense.alisverisTipi].yuzde = (globData[expense.alisverisTipi].total * 100 / harcama[prefix].totalMonthExpense).toFixed(2);
+            try {
+              let expense = allExpense[i];
+              console.log(expense);
+              globData[expense.alisverisTipi].total += parseInt(expense.total);
+              globData[expense.alisverisTipi].yuzde = (globData[expense.alisverisTipi].total * 100 / harcama[prefix].totalMonthExpense).toFixed(2);
+            } catch (e) {
+              console.log(e);
+            }
           }
-
           return (
             <Container>
               <Content padder>
