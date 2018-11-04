@@ -1,4 +1,4 @@
-package com.harcama;
+package com.halilcakar.harcama;
 
 import android.app.Application;
 
